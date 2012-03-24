@@ -65,11 +65,11 @@ CFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64"; export CFLAGS
 autoreconf -if
 %configure --enable-static=no \
            --with-dyn-default \
+           --with-lpc10 \
            --with-gsm=dyn \
            --includedir=%{_includedir}/sox \
            --with-distro=Fedora
 
-#           --with-lpc10 \
 make %{?_smp_mflags}
 
 

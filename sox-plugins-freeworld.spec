@@ -2,14 +2,15 @@
 
 Summary:        Additional (free) codecs for sox
 Name:           sox-plugins-freeworld
-Version:        14.3.2
-Release:        3%{?dist}
+Version:        14.4.0
+Release:        1%{?dist}
 # sox.c is GPLv2, all other is LGPL2.1
 License:        GPLv2+ and LGPLv2+
 Group:          Applications/Multimedia
 
 URL:            http://sox.sourceforge.net/
-Source0:        http://prdownloads.sourceforge.net/sox/sox-%{version}.tar.gz
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+
 Patch0:         01-making-autoreconf-possible.patch
 Patch1:         02-reconfigured-using-autoreconf.patch
 Patch2:         03-adding-support-for-without-lpc.patch
@@ -93,6 +94,9 @@ find %{buildroot}%{_libdir}/sox -name "*.so" \! -name "*mp3.so" -exec rm -f {} \
 
 
 %changelog
+* Sun Oct 28 2012 Richard Shaw <hobbes1069@gmail.com> - 14.4.0-1
+- Update to latest upstream release.
+
 * Thu Mar 22 2012 Richard Shaw <hobbes1069@gmail.com> - 14.3.2-3
 - Add patches to deal with bundled libraries.
 

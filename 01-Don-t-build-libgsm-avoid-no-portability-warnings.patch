@@ -1,0 +1,29 @@
+From eedd4cd96effe6aca62d432c2b2b1e2be27a0a74 Mon Sep 17 00:00:00 2001
+From: Alec Leamas <alec@tests.notat.diaspora.com>
+Date: Tue, 30 Oct 2012 20:33:27 +0100
+Subject: [PATCH 1/2] Don't build libgsm, avoid no-portability warnings.
+
+---
+ Makefile.am | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 089b014..36bcbe9 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,9 +1,10 @@
+ ## Process this file with automake to produce Makefile.in
+ 
+ ACLOCAL_AMFLAGS = -I m4
++AUTOMAKE_OPTIONS = -Wno-portability
+ 
+-SUBDIRS = lpc10 libgsm src
+-DIST_SUBDIRS = lpc10 libgsm src msvc9 msvc10
++SUBDIRS = lpc10 src
++DIST_SUBDIRS = lpc10 src msvc9 msvc10
+ 
+ RM = rm -f
+ 
+-- 
+1.7.11.4
+

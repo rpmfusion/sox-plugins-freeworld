@@ -2,20 +2,18 @@
 
 Summary:        Additional (free) codecs for sox
 Name:           sox-plugins-freeworld
-Version:        14.3.2
-Release:        3%{?dist}
+Version:        14.4.0
+Release:        1%{?dist}
 # sox.c is GPLv2, all other is LGPL2.1
 License:        GPLv2+ and LGPLv2+
 Group:          Applications/Multimedia
 
 URL:            http://sox.sourceforge.net/
-Source0:        http://prdownloads.sourceforge.net/sox/sox-%{version}.tar.gz
-Patch0:         01-making-autoreconf-possible.patch
-Patch1:         02-reconfigured-using-autoreconf.patch
-Patch2:         03-adding-support-for-without-lpc.patch
-Patch3:         04-nuking-libgsm-from-build-system.patch
-Patch4:         06-fix-compile-error.patch
-Patch5:         07-ignore-internal-libgsm.patch
+Source0:        http://downloads.sourceforge.net/%{realname}/sox-%{version}.tar.gz
+
+Patch0:         01-Don-t-build-libgsm-avoid-no-portability-warnings.patch
+#Patch1:         07-dont-configure-external-components.patch
+Patch1:         07-Dont-configure-libgsm.patch
 
 BuildRequires:  libvorbis-devel
 BuildRequires:  alsa-lib-devel, libtool-ltdl-devel, libsamplerate-devel
@@ -45,19 +43,13 @@ This package provides the plugin for MPEG-2 audio layer 3 audio (MP3) support.
 %setup -q -n %{realname}-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-# Only appliy for ffmpeg 0.8 and above
-%if %fedora >= 16
-%patch4 -p1
-%endif
-%patch5 -p1
 
 # Remove bundled libs
 rm -rf libgsm
 # lpc10 has no upstream so consider it a private lib.
 # See http://lists.rpmfusion.org/pipermail/rpmfusion-developers/2012-March/012081.html
 #rm -rf lpc10
+rm -f m4/libtool.m4
 
 
 %build
@@ -65,7 +57,6 @@ CFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64"; export CFLAGS
 autoreconf -if
 %configure --enable-static=no \
            --with-dyn-default \
-           --with-lpc10 \
            --with-gsm=dyn \
            --includedir=%{_includedir}/sox \
            --with-distro=Fedora
@@ -93,6 +84,9 @@ find %{buildroot}%{_libdir}/sox -name "*.so" \! -name "*mp3.so" -exec rm -f {} \
 
 
 %changelog
+* Sun Oct 28 2012 Richard Shaw <hobbes1069@gmail.com> - 14.4.0-1
+- Update to latest upstream release.
+
 * Thu Mar 22 2012 Richard Shaw <hobbes1069@gmail.com> - 14.3.2-3
 - Add patches to deal with bundled libraries.
 

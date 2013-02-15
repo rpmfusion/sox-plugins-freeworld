@@ -2,8 +2,8 @@
 
 Summary:        Additional (free) codecs for sox
 Name:           sox-plugins-freeworld
-Version:        14.4.0
-Release:        1%{?dist}
+Version:        14.4.1
+Release:        2%{?dist}
 # sox.c is GPLv2, all other is LGPL2.1
 License:        GPLv2+ and LGPLv2+
 Group:          Applications/Multimedia
@@ -14,6 +14,7 @@ Source0:        http://downloads.sourceforge.net/%{realname}/sox-%{version}.tar.
 Patch0:         01-Don-t-build-libgsm-avoid-no-portability-warnings.patch
 #Patch1:         07-dont-configure-external-components.patch
 Patch1:         07-Dont-configure-libgsm.patch
+Patch2:         sox-mcompand_clipping.patch
 
 BuildRequires:  libvorbis-devel
 BuildRequires:  alsa-lib-devel, libtool-ltdl-devel, libsamplerate-devel
@@ -43,6 +44,7 @@ This package provides the plugin for MPEG-2 audio layer 3 audio (MP3) support.
 %setup -q -n %{realname}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Remove bundled libs
 rm -rf libgsm
@@ -84,6 +86,9 @@ find %{buildroot}%{_libdir}/sox -name "*.so" \! -name "*mp3.so" -exec rm -f {} \
 
 
 %changelog
+* Fri Feb 15 2013 Frantisek Kluknavsky <fkluknav@redhat.com> - 14.4.1-2
+- added sox-mcompand_clipping.patch to prevent integer overflow
+
 * Sun Oct 28 2012 Richard Shaw <hobbes1069@gmail.com> - 14.4.0-1
 - Update to latest upstream release.
 
